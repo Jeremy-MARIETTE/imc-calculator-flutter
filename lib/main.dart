@@ -53,12 +53,15 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   TextEditingController poidsController = TextEditingController();
   TextEditingController tailleController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
   String poids = "";
   String taille = "";
   String resultat = "";
-  int currentIndex = 0;
+  int currentIndex = 1;
   String commentaireImc = "";
   double imcPointer = 18;
+  double age = 0;
+  double img =0;
 
 
 
@@ -98,8 +101,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
               Row(
                 children: [
-                  radioButton("Homme", Colors.blue, 0),
-                  radioButton("Femme", Colors.pink, 1),
+                  radioButton("Homme", Colors.blue, 1),
+                  radioButton("Femme", Colors.pink, 0),
                 ],
               ),
 
@@ -155,14 +158,45 @@ class _MyHomePageState extends State<MyHomePage> {
               SizedBox(
                 height: 20,
               ),
+              TextField(
+                  controller: ageController,
+                  keyboardType: TextInputType.number,
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    hintText: "Entrez votre age",
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  onSubmitted: (val){
+                    setState(() {
+                      taille = val;
+                    });
+
+                  }
+
+              ),
+              SizedBox(
+                height: 20,
+              ),
               FloatingActionButton.extended(
                 onPressed: () {
                   double poids = double.parse(poidsController.value.text);
                   double taille = double.parse(tailleController.value.text);
+                  double newAge =  double.parse(ageController.value.text);
                   calculImc(poids, taille);
+                  //Enlève le clavier
+                  FocusManager.instance.primaryFocus?.unfocus();
+
+                  setState(() {
+                    age = newAge;
+                  });
+                  IMG(imcPointer,age,currentIndex);
                 },
                 label: const Text('Calculez votre IMC'),
-                icon: const Icon(Icons.line_weight),
                 backgroundColor: Colors.blue,
               ),
               SizedBox(
@@ -171,16 +205,70 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
               chart(),
-              Text("Votre IMC :"),
-              Text(resultat,style: TextStyle(
-                fontSize:40,
-                fontWeight: FontWeight.bold,
-              ),),
-              Text("Commentaire :"),
-              Text(commentaireImc,style: TextStyle(
-                fontSize:30,
-                fontWeight: FontWeight.bold,
-              ),),
+              Container(
+                color: Colors.amber[600],
+                width: 300,
+                child:  Column(
+                  children: [
+                    Text("Votre IMC :"),
+                    Text(resultat,style: TextStyle(
+                      fontSize:40,
+                      fontWeight: FontWeight.bold,
+                    ),),
+                    Text("Commentaire :"),
+                    Text(commentaireImc,style: TextStyle(
+                      fontSize:30,
+                      fontWeight: FontWeight.bold,
+                    ),),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                color: Colors.amber[600],
+                width: 300,
+                child: Column(
+                  children: [
+                    Text(""
+                        "BMR Formule de Schofield:"),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                color: Colors.amber[600],
+                width: 300,
+                child: Column(
+                  children: [
+                    Text("IMG Indice de matière grasse:"),
+                    Text(img.toStringAsFixed(2),style: TextStyle(
+                      fontSize:30,
+                      fontWeight: FontWeight.bold,
+                    ),),
+                    Text("Commentaire:"),
+                  ],
+
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                color: Colors.amber[600],
+                width: 300,
+                child: Column(
+                  children: [
+                    Text(""
+                        "Poids idéal:"),
+                  ],
+                ),
+              ),
+
+
 
 
             ],
@@ -245,6 +333,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   }
 
+  IMG(imc,age,currentIndex){
+    setState(() {
+      img = (1.2*imc)+(0.23*age)-(10.8*currentIndex)-5.4;
+    });
+  }
+
   Widget radioButton(String value, Color color, int index){
     return Expanded(
         child: Container(
@@ -257,7 +351,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: (){
               changeIndex(index);
               print("Index : $index");
-              if (index == 0){
+              if (index == 1){
                 print("Vous êtes un Homme");
               }else{
                 print("Vous êtes une Femme");
@@ -298,6 +392,8 @@ class _MyHomePageState extends State<MyHomePage> {
             minValue: 0,
             maxValue: 60,
             segments: [
+
+
               RadialGaugeSegment(
                 minValue: 0,
                 maxValue: 18.5,
@@ -316,10 +412,31 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               RadialGaugeSegment(
                 minValue: 25,
-                maxValue: 60,
+                maxValue: 30,
                 minAngle: -25,
-                maxAngle: 90,
+                maxAngle: -5,
+                color: Colors.yellow,
+              ),
+              RadialGaugeSegment(
+                minValue: 30,
+                maxValue: 35,
+                minAngle: -5,
+                maxAngle: 25,
+                color: Colors.orange,
+              ),
+              RadialGaugeSegment(
+                minValue: 35,
+                maxValue: 40,
+                minAngle: 25,
+                maxAngle: 55,
                 color: Colors.red,
+              ),
+              RadialGaugeSegment(
+                minValue: 40,
+                maxValue: 40,
+                minAngle: 55,
+                maxAngle: 90,
+                color: Colors.black,
               ),
               // ...
             ],
