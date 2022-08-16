@@ -59,9 +59,14 @@ class _MyHomePageState extends State<MyHomePage> {
   String resultat = "";
   int currentIndex = 1;
   String commentaireImc = "";
+  String commentaireImg = "";
   double imcPointer = 18;
   double age = 0;
-  double img =0;
+  double img =0 ;
+  double poidsIdeal = 0;
+  double tailleCalcul = 0;
+  double poidsCalcul = 0;
+  double bmr = 0;
 
 
 
@@ -193,8 +198,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
                   setState(() {
                     age = newAge;
+                    tailleCalcul = taille;
+                    poidsCalcul = poids;
                   });
                   IMG(imcPointer,age,currentIndex);
+                  calculPoids(currentIndex,tailleCalcul);
+                  BMR(age, poidsCalcul, currentIndex);
                 },
                 label: const Text('Calculez votre IMC'),
                 backgroundColor: Colors.blue,
@@ -205,71 +214,22 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
               chart(),
-              Container(
-                color: Colors.amber[600],
-                width: 300,
-                child:  Column(
-                  children: [
-                    Text("Votre IMC :"),
-                    Text(resultat,style: TextStyle(
-                      fontSize:40,
-                      fontWeight: FontWeight.bold,
-                    ),),
-                    Text("Commentaire :"),
-                    Text(commentaireImc,style: TextStyle(
-                      fontSize:30,
-                      fontWeight: FontWeight.bold,
-                    ),),
-                  ],
-                ),
-              ),
+              card("Votre IMC :", resultat, commentaireImc),
+
               SizedBox(
                 height: 20,
               ),
-              Container(
-                color: Colors.amber[600],
-                width: 300,
-                child: Column(
-                  children: [
-                    Text(""
-                        "BMR Formule de Schofield:"),
-                  ],
-                ),
-              ),
+              card("BMR Formule de Schofield:", bmr.toStringAsFixed(2)," Kcal/jour"),
+
               SizedBox(
                 height: 20,
               ),
-              Container(
-                color: Colors.amber[600],
-                width: 300,
-                child: Column(
-                  children: [
-                    Text("IMG Indice de matière grasse:"),
-                    Text(img.toStringAsFixed(2),style: TextStyle(
-                      fontSize:30,
-                      fontWeight: FontWeight.bold,
-                    ),),
-                    Text("Commentaire:"),
-                  ],
+              card("IMG Indice de matière grasse:", img.toStringAsFixed(2), commentaireImg),
 
-                ),
-              ),
               SizedBox(
                 height: 20,
               ),
-              Container(
-                color: Colors.amber[600],
-                width: 300,
-                child: Column(
-                  children: [
-                    Text(""
-                        "Poids idéal:"),
-                  ],
-                ),
-              ),
-
-
-
+              card("Poids idéal:", poidsIdeal.toStringAsFixed(2), "Kg"),
 
             ],
 
@@ -333,12 +293,92 @@ class _MyHomePageState extends State<MyHomePage> {
 
   }
 
-  IMG(imc,age,currentIndex){
+  commImg(imgResult,currentIndex){
     setState(() {
-      img = (1.2*imc)+(0.23*age)-(10.8*currentIndex)-5.4;
+
+      if(currentIndex == 1){
+        if(imgResult < 15){
+          commentaireImg = "Indice de matière grasse trop faible.";
+        }
+        if(imgResult > 15 && imgResult < 20){
+          commentaireImg = "Indice de matière grasse normal.";
+        }
+        if(imgResult > 20){
+          commentaireImg = "Indice de matière grasse trop haut.";
+        }
+
+      }
+      if(currentIndex == 0){
+        if(imgResult < 25){
+          commentaireImg = "Indice de matière grasse trop faible.";
+        }
+        if(imgResult > 25 && imgResult < 30){
+          commentaireImg = "Indice de matière grasse normal.";
+        }
+        if(imgResult > 30){
+          commentaireImg = "Indice de matière grasse trop haut.";
+        }
+
+      }
+
     });
   }
 
+  IMG(imc,age,currentIndex){
+    setState(() {
+      img = (1.2*imc)+(0.23*age)-(10.8*currentIndex)-5.4;
+
+    });
+    commImg(img, currentIndex);
+  }
+BMR(age,poids,currentIndex){
+    setState(() {
+      if(currentIndex == 1){
+        if(age >10 && age <17){
+            bmr = 17.686*poids+658.2;
+        }
+        if(age >17 && age <30){
+          bmr = 15.057*poids+692.2;
+        }
+        if(age >30 && age <60){
+          bmr = 11.472*poids+873.1;
+        }
+        if(age >60){
+          bmr = 11.411*poids+587.7;
+        }
+
+      }
+      if(currentIndex == 0){
+        if(age >10 && age <17){
+          bmr = 13.384*poids+692.6;
+        }
+        if(age >17 && age <30){
+          bmr = 14.818*poids+486.6;
+        }
+        if(age >30 && age <60){
+          bmr = 8.126*poids+845.6;
+        }
+        if(age >60){
+          bmr = 9.082*poids+658.5;
+        }
+
+      }
+    });
+
+}
+
+  calculPoids(currentIndex,tailleCalcul){
+
+    setState(() {
+      if(currentIndex == 1){
+        poidsIdeal = tailleCalcul-100-((tailleCalcul-150)/4);
+      }
+      if(currentIndex == 0){
+        poidsIdeal = tailleCalcul-100-((tailleCalcul-150)/2.5);
+      }
+    });
+
+  }
   Widget radioButton(String value, Color color, int index){
     return Expanded(
         child: Container(
@@ -455,6 +495,37 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
+  }
+
+  card(titre,data,commentaire){
+    return  Container(
+      width: 300,
+      decoration: BoxDecoration(
+        border: Border.all(
+            color: Colors.grey,
+            width: 5.0,
+            style: BorderStyle.solid
+        ),
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.grey[200],
+      ),
+      child:  Column(
+        children: [
+          Text("$titre"),
+          Text(data,style: TextStyle(
+            fontSize:40,
+            fontWeight: FontWeight.bold,
+          ),),
+          Text("Commentaire :"),
+          Text(commentaire,style: TextStyle(
+            fontSize:30,
+            fontWeight: FontWeight.bold,
+          ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
   }
 
 }
