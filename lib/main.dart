@@ -5,6 +5,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:gauges/gauges.dart';
+import 'package:easy_localization/easy_localization.dart';
+import './translations/codegen_loader.g.dart';
+import '../translations/locale_keys.g.dart';
 
 
 
@@ -13,8 +16,20 @@ import 'package:gauges/gauges.dart';
 
 
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+  runApp(
+    EasyLocalization(child: MyApp(),
+        supportedLocales: [
+          Locale('fr'),
+          Locale('en')
+        ],
+        fallbackLocale: Locale('en'),
+        assetLoader: CodegenLoader(),
+        path: 'assets/translations')
+
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -28,6 +43,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       title: 'Calcul IMC',
       theme: ThemeData(
 
@@ -98,8 +116,26 @@ class _MyHomePageState extends State<MyHomePage> {
 
             children: <Widget>[
 
-
-
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                LocaleKeys.bienvenue.tr(),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly ,
+              children: [
+                ElevatedButton(onPressed: () async{
+                  await context.setLocale(Locale('en'));
+                }, child: Text("English")),
+                ElevatedButton(onPressed: () async{
+                  await context.setLocale(Locale('fr'));
+                }, child: Text("Français")),
+              ],
+            ),
               SizedBox(
                 height: 20,
               ),
