@@ -1,3 +1,27 @@
 {
-  "bienvenue" : "Welcome on my app"
+  "bienvenue" : "Welcome on my app",
+  "homme" : "Men",
+  "femme" : "Women",
+  "entrez_poids" : "Enter your weight in kg",
+  "entrez_taille" : "Enter your height in cm",
+  "entrez_age" : "Enter your age",
+  "imc_btn" : "Calculate your BMI",
+  "card_text" : "Your BMI",
+  "card_bmr" : "BMR Schofield Formula:",
+  "bmr_kcal" : "kcal/day",
+  "card_img" : "IMG Fat Index",
+  "card_poids_ideal" : "Ideal weight:",
+  "card_poids_ideal_kg" : "Kg",
+  "commentaire" : "Comment",
+  "maigreur_morbide" : "Morbid thinness",
+  "maigreur" : "thinness",
+  "poids_normal" : "regular weight",
+  "surpoids" : "Overweight",
+  "obesite_simple" : "Simple obesity",
+  "obesite_severe" : "Severe obesity",
+  "obesite_morbide" : "Morbid obesity",
+  "img_trop_faible" : "Fat index too low.",
+  "img_normal" : "Normal fat index.",
+  "img_trop_haut" : "Fat index too high."
+
 }

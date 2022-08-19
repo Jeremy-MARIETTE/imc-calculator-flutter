@@ -8,6 +8,7 @@ import 'package:gauges/gauges.dart';
 import 'package:easy_localization/easy_localization.dart';
 import './translations/codegen_loader.g.dart';
 import '../translations/locale_keys.g.dart';
+import 'package:flag/flag.dart';
 
 
 
@@ -127,13 +128,38 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly ,
+
               children: [
                 ElevatedButton(onPressed: () async{
-                  await context.setLocale(Locale('en'));
-                }, child: Text("English")),
-                ElevatedButton(onPressed: () async{
                   await context.setLocale(Locale('fr'));
-                }, child: Text("Français")),
+                },
+                  style: ButtonStyle(
+                 backgroundColor: MaterialStateProperty.all(Colors.white),
+                  ),
+                  child:  Flag.fromCode(
+                    FlagsCode.FR,
+                    height: 40,
+                    width: 60,
+                    fit: BoxFit.cover,
+                  ),
+
+                ),
+
+                ElevatedButton(onPressed: () async{
+                  await context.setLocale(Locale('en'));
+                },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.white),
+                  ),
+                  child:  Flag.fromCode(
+                    FlagsCode.US,
+                    height: 40,
+                    width: 60,
+                    fit: BoxFit.fill,
+                  ),
+
+                ),
+
               ],
             ),
               SizedBox(
@@ -142,8 +168,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
               Row(
                 children: [
-                  radioButton("Homme", Colors.blue, 1),
-                  radioButton("Femme", Colors.pink, 0),
+                  radioButton(LocaleKeys.homme.tr(), Colors.blue, 1),
+                  radioButton(LocaleKeys.femme.tr(), Colors.pink, 0),
                 ],
               ),
 
@@ -156,7 +182,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
-                  hintText: "Entrez votre poids en kg",
+                  hintText: LocaleKeys.entrez_poids.tr(),
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -180,7 +206,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
-                    hintText: "Entrez votre taille en cm",
+                    hintText: LocaleKeys.entrez_taille.tr(),
                     filled: true,
                     fillColor: Colors.grey[200],
                     border: OutlineInputBorder(
@@ -204,7 +230,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
-                    hintText: "Entrez votre age",
+                    hintText: LocaleKeys.entrez_age.tr(),
                     filled: true,
                     fillColor: Colors.grey[200],
                     border: OutlineInputBorder(
@@ -241,7 +267,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   calculPoids(currentIndex,tailleCalcul);
                   BMR(age, poidsCalcul, currentIndex);
                 },
-                label: const Text('Calculez votre IMC'),
+                label: Text( LocaleKeys.imc_btn.tr() ),
                 backgroundColor: Colors.blue,
               ),
               SizedBox(
@@ -250,22 +276,22 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
               chart(),
-              card("Votre IMC :", resultat, commentaireImc),
+              card(LocaleKeys.card_text.tr(), resultat, commentaireImc),
 
               SizedBox(
                 height: 20,
               ),
-              card("BMR Formule de Schofield:", bmr.toStringAsFixed(2)," Kcal/jour"),
+              card(LocaleKeys.card_bmr.tr(), bmr.toStringAsFixed(2),LocaleKeys.bmr_kcal.tr()),
 
               SizedBox(
                 height: 20,
               ),
-              card("IMG Indice de matière grasse:", img.toStringAsFixed(2), commentaireImg),
+              card(LocaleKeys.card_img.tr(), img.toStringAsFixed(2), commentaireImg),
 
               SizedBox(
                 height: 20,
               ),
-              card("Poids idéal:", poidsIdeal.toStringAsFixed(2), "Kg"),
+              card(LocaleKeys.card_poids_ideal.tr(), poidsIdeal.toStringAsFixed(2), LocaleKeys.card_poids_ideal_kg.tr()),
 
             ],
 
@@ -303,24 +329,24 @@ class _MyHomePageState extends State<MyHomePage> {
    commImc(finalresultat){
     setState(() {
       if(finalresultat < 16.5){
-        commentaireImc = "Maigreur morbide";
+        commentaireImc = LocaleKeys.maigreur_morbide.tr();
      }if(finalresultat > 16.5 && finalresultat < 18.5){
-        commentaireImc = "Maigreur";
+        commentaireImc = LocaleKeys.maigreur.tr();
       }
       if(finalresultat > 18.5 && finalresultat < 25){
-        commentaireImc = "Poids normal";
+        commentaireImc = LocaleKeys.poids_normal.tr();
       }
       if(finalresultat > 25 && finalresultat < 30){
-        commentaireImc = "Surpoids";
+        commentaireImc = LocaleKeys.surpoids.tr();
       }
       if(finalresultat > 30 && finalresultat < 35){
-        commentaireImc = "Obésité simple";
+        commentaireImc = LocaleKeys.obesite_simple.tr();
       }
       if(finalresultat > 35 && finalresultat < 40){
-        commentaireImc = "Obésité sévère";
+        commentaireImc = LocaleKeys.obesite_severe.tr();
       }
       if(finalresultat > 40 ){
-        commentaireImc = "Obésité morbide";
+        commentaireImc = LocaleKeys.obesite_morbide.tr();
       }
 
     }
@@ -334,25 +360,25 @@ class _MyHomePageState extends State<MyHomePage> {
 
       if(currentIndex == 1){
         if(imgResult < 15){
-          commentaireImg = "Indice de matière grasse trop faible.";
+          commentaireImg = LocaleKeys.img_trop_faible.tr();
         }
         if(imgResult > 15 && imgResult < 20){
-          commentaireImg = "Indice de matière grasse normal.";
+          commentaireImg = LocaleKeys.img_normal.tr();
         }
         if(imgResult > 20){
-          commentaireImg = "Indice de matière grasse trop haut.";
+          commentaireImg = LocaleKeys.img_trop_haut.tr();
         }
 
       }
       if(currentIndex == 0){
         if(imgResult < 25){
-          commentaireImg = "Indice de matière grasse trop faible.";
+          commentaireImg = LocaleKeys.img_trop_faible.tr();
         }
         if(imgResult > 25 && imgResult < 30){
-          commentaireImg = "Indice de matière grasse normal.";
+          commentaireImg = LocaleKeys.img_normal.tr();
         }
         if(imgResult > 30){
-          commentaireImg = "Indice de matière grasse trop haut.";
+          commentaireImg = LocaleKeys.img_trop_haut.tr();
         }
 
       }
@@ -552,7 +578,7 @@ BMR(age,poids,currentIndex){
             fontSize:40,
             fontWeight: FontWeight.bold,
           ),),
-          Text("Commentaire :"),
+          Text(LocaleKeys.commentaire.tr()),
           Text(commentaire,style: TextStyle(
             fontSize:30,
             fontWeight: FontWeight.bold,

@@ -19,8 +19,8 @@ class CodegenLoader extends AssetLoader{
   "homme": "Men",
   "femme": "Women",
   "entrez_poids": "Enter your weight in kg",
-  "entrez_taille": "Enter your height in cm",
-  "entrez_age": "Enter your age",
+  "entrez_taille": "Entrez votre taille en cm",
+  "entrez_age": "Enter your height in cm",
   "imc_btn": "Calculate your BMI",
   "card_text": "Your BMI",
   "card_bmr": "BMR Schofield Formula:",
@@ -28,17 +28,7 @@ class CodegenLoader extends AssetLoader{
   "card_img": "IMG Fat Index",
   "card_poids_ideal": "Ideal weight:",
   "card_poids_ideal_kg": "Kg",
-  "commentaire": "Comment",
-  "maigreur_morbide": "Morbid thinness",
-  "maigreur": "thinness",
-  "poids_normal": "regular weight",
-  "surpoids": "Overweight",
-  "obesite_simple": "Simple obesity",
-  "obesite_severe": "Severe obesity",
-  "obesite_morbide": "Morbid obesity",
-  "img_trop_faible": "Fat index too low.",
-  "img_normal": "Normal fat index.",
-  "img_trop_haut": "Fat index too high."
+  "commentaire": "Comment"
 };
 static const Map<String,dynamic> fr = {
   "bienvenue": "Bienvenue sur mon application",
@@ -54,17 +44,7 @@ static const Map<String,dynamic> fr = {
   "card_img": "IMG Indice de matière grasse",
   "card_poids_ideal": "Poids idéal:",
   "card_poids_ideal_kg": "Kg",
-  "commentaire": "Commentaire",
-  "maigreur_morbide": "Maigreur morbide",
-  "maigreur": "Maigreur",
-  "poids_normal": "Poids normal",
-  "surpoids": "Surpoids",
-  "obesite_simple": "Obésité simple",
-  "obesite_severe": "Obésité sévère",
-  "obesite_morbide": "Obésité morbide",
-  "img_trop_faible": "Indice de matière grasse trop faible.",
-  "img_normal": "Indice de matière grasse normal.",
-  "img_trop_haut": "Indice de matière grasse trop haut."
+  "commentaire": "Commentaire"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "fr": fr};
 }

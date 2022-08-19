@@ -1,3 +1,35 @@
 {
-  "bienvenue" : "Bienvenue sur mon application"
+  "bienvenue" : "Bienvenue sur mon application",
+  "homme" : "Homme",
+  "femme" : "Femme",
+  "entrez_poids" : "Entrez votre poids en kg",
+  "entrez_taille" : "Entrez votre taille en cm",
+  "entrez_age" : "Entrez votre age",
+  "imc_btn" : "Calculez votre IMC",
+  "card_text" : "Votre IMC",
+  "card_bmr" : "BMR Formule de Schofield:",
+  "bmr_kcal" : "Kcal/jour",
+  "card_img" : "IMG Indice de matière grasse",
+  "card_poids_ideal" : "Poids idéal:",
+  "card_poids_ideal_kg" : "Kg",
+  "commentaire" : "Commentaire",
+  "maigreur_morbide" : "Maigreur morbide",
+  "maigreur" : "Maigreur",
+  "poids_normal" : "Poids normal",
+  "surpoids" : "Surpoids",
+  "obesite_simple" : "Obésité simple",
+  "obesite_severe" : "Obésité sévère",
+  "obesite_morbide" : "Obésité morbide",
+  "img_trop_faible" : "Indice de matière grasse trop faible.",
+  "img_normal" : "Indice de matière grasse normal.",
+  "img_trop_haut" : "Indice de matière grasse trop haut."
+
+
+
+
+
+
+
+
+
 }

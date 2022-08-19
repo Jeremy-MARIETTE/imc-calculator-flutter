@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   gauges: ^1.0.0
   easy_localization: ^3.0.1
+  flag: ^6.0.0
 
 
 
